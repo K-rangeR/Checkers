@@ -26,15 +26,11 @@ type player struct {
 // wait for a message that indicates if they are going first
 // or second.
 func (p *player) play() {
-	select {
-	case goFirst := <-p.startChan:
-		if goFirst {
-			// TODO: tell player
-			p.readMyMove()
-		} else {
-			// TODO: tell player
-			p.readOpponentMove()
-		}
+	goFirst := <-p.startChan
+	if goFirst {
+		p.readMyMove()
+	} else {
+		p.readOpponentMove()
 	}
 }
 

@@ -1,13 +1,13 @@
 package main
 
 import (
+	"github.com/gorilla/websocket"
 	"math/rand"
 	"net/http"
-	"github.com/gorilla/websocket"
 )
 
 var upgrader = &websocket.Upgrader{
-	ReadBufferSize: 1024,
+	ReadBufferSize:  1024,
 	WriteBufferSize: 1024}
 
 // matchMaker represents the http handler that
@@ -27,9 +27,9 @@ func (m *matchMaker) ServeHTTP(w http.ResposneWriter, r *http.Request) {
 	}
 
 	p := &player{
-		socket: socket,
-		moveChan: nil,
-		startChan: nil,
+		socket:    socket,
+		moveChan:  nil,
+		startChan: make(chan bool),
 	}
 
 	m.playerChan <- p
