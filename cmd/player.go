@@ -14,7 +14,7 @@ type player struct {
 	// moveChan is used to link up the two players,
 	// moves are forwarded to the other player over
 	// this channel
-	moveChan chan *move
+	moveChan chan *message
 
 	// startChan is used to notify the player if
 	// they are going first (true) or second (false),
@@ -24,9 +24,18 @@ type player struct {
 
 // play is the starting point for the player. Here they will
 // wait for a message that indicates if they are going first
-// or second
+// or second.
 func (p *player) play() {
-	fmt.Println("play")
+	select {
+	case goFirst := <-p.startChan:
+		if goFirst {
+			// TODO: tell player
+			p.readMyMove()
+		} else {
+			// TODO: tell player
+			p.readOpponentMove()
+		}
+	}
 }
 
 // readMyMove blocks the player until the next move is sent
@@ -36,7 +45,7 @@ func (p *player) readMyMove() {
 }
 
 // readOpponentMove blocks the player until it reads the opponents
-// move moveChan
+// move from moveChan
 func (p *player) readOpponentMove() {
 	fmt.Println("readOpponentMove")
 }
