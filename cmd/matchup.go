@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/gorilla/websocket"
+	"log"
 	"math/rand"
 	"net/http"
+	"fmt"
 )
 
 var upgrader = &websocket.Upgrader{
@@ -19,7 +21,8 @@ type matchMaker struct {
 
 // ServeHTTP is the http handler that runs when a player wants
 // to play against another player
-func (m *matchMaker) ServeHTTP(w http.ResposneWriter, r *http.Request) {
+func (m *matchMaker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("player connected: ServeHTTP()")
 	socket, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Fatal("ServeHTTP:", err)
@@ -39,21 +42,22 @@ func (m *matchMaker) ServeHTTP(w http.ResposneWriter, r *http.Request) {
 // listenForPlayers listens on playerChan for players requesting to play
 func (m *matchMaker) listenForPlayers() {
 	for {
-		select {
-		case p := <-m.playerChan:
-			if len(m.waitingPlayers) == 0 {
-				m.waitingPlayers = append(m.waitingPlayers, p)
-			} else {
-				p2 := m.waitingPlayer[0]
-				go matchUpPlayer(p, p2)
-				m.waitingPlayer = m.waitingPlayer[1:]
-			}
+		p := <-m.playerChan
+		if len(m.waitingPlayers) == 0 {
+			fmt.Println("Only one player: listenForPlayers()")
+			m.waitingPlayers = append(m.waitingPlayers, p)
+		} else {
+			fmt.Println("Other player found: listenForPlayers()")
+			p2 := m.waitingPlayers[0]
+			go matchUpPlayers(p, p2)
+			m.waitingPlayers = m.waitingPlayers[1:]
 		}
 	}
 }
 
 // matchUpPlayers puts p1 and p2 against each other
 func matchUpPlayers(p1, p2 *player) {
+	fmt.Println("Making match: matchUpPlayers()")
 	moveChan := make(chan *message)
 	p1.moveChan = moveChan
 	p2.moveChan = moveChan
