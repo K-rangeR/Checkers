@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Chex</title>
+        <style>
+            h1 {
+                text-align: center;
+                font-size: 40px;
+            }
+
+            p {
+                text-align: center;
+                font-size: 30px;
+            }
+
+            #btnWrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            button {
+                border-radius: 25px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 20px;
+                width: 20%;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 26px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #3e8e41;
+            }
+
+            button:active {
+                background-color: #3e8e41;
+                box-shadow: 0 2px black;
+                transform: translateY(2px);
+            }
+
+            #loader {
+                margin: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 16px solid #f3f3f3;
+                border-radius: 50%;
+                border-top: 16px solid blue;
+                border-left: 16px solid black;
+                border-right: 16px solid black;
+                border-bottom: 16px solid red;
+                width: 80px;
+                height: 80px;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+
+            @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Chekers</h1>
+        <p>
+            Welcome! This is a multiplayer checkers game that runs right here
+            in your browser window. Just press play to start. You will then be
+            matched up with another player. Good luck!
+        </p>
+        <div id="btnWrapper">
+            <button type="button" name="play">Play</button>
+        </div>
+        <div id="loader"></div>
+    </body>
+</html>
