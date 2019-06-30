@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
-	"fmt"
 )
 
 // player represents a checker player
