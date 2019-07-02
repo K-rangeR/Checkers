@@ -1,0 +1,97 @@
+body {
+    background-color: #505050;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        'header header header header header header'
+        'middle middle middle middle right right'
+}
+
+.header {
+    grid-area: header;
+    background-color: #505050;
+    color: white;
+    padding: 0px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.left
+.right {
+    padding: 10px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.left {
+    grid-area: left;
+}
+
+.middle {
+    grid-area: middle;
+}
+
+.right {
+    grid-area: right;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+}
+
+.checkerPiece {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+button {
+    border-radius: 25px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 20px;
+    width: 40%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 26px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
+
+button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 2px black;
+    transform: translateY(2px);
+}
+
+table {
+    margin: 0 auto;
+    border: 1px black;
+    background: black;
+}
+
+td {
+    width: 70px;
+    height: 70px;
+}
+
+tr:nth-child(odd) td:nth-child(even),
+tr:nth-child(even) td:nth-child(odd) {
+    background: white;
+}
