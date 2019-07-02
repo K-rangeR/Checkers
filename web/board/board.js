@@ -52,7 +52,6 @@ var gameBoard = [
 
 window.onload = createBoard;
 function createBoard() {
-    alert("loaded");
     var board = document.getElementById("board");
     board.addEventListener("click", eval);
     for (r = 0; r < 8; r++) {
