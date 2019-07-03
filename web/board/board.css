@@ -87,6 +87,7 @@ table {
 }
 
 td {
+    text-align: center;
     width: 70px;
     height: 70px;
 }

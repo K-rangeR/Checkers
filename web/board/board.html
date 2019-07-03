@@ -9,19 +9,100 @@
     <body>
         <div class="grid-container">
             <div class="header">
-                <h1>It's your turn!</h1>
+                <h1 id="msgHeader">Waiting for other player...</h1>
             </div>
             <div class="middle" style="background-color:#505050">
-                <table id="board"></table>
+                <table id="board">
+                    <tr>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                        <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
             <div class="right" style="background-color:#505050">
                 <div class="checkerPiece" style="background-color:lightgreen"></div>
                 <h2 style="color:white">Opponent = 12</h2><br>
                 <div class="checkerPiece" style="background-color:lightskyblue"></div>
                 <h2 style="color:white">You = 12</h2><br>
-                <button type="button" name="moveBtn">Move</button>
+                <button type="button" name="moveBtn" onclick="makeMove()">Move</button>
                 <br>
-                <button type="button" name="quitBtn">Quit</button>
+                <button type="button" name="quitBtn" onclick="quitGame()">Quit</button>
             </div>
         </div>
     </body>

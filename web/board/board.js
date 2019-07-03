@@ -11,7 +11,6 @@ var checkerToJump = {
     col: 0,
 };
 
-/*
 var gameBoard = [
     [0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0],
@@ -22,7 +21,6 @@ var gameBoard = [
     [0, 2, 0, 2, 0, 2, 0, 2],
     [2, 0, 2, 0, 2, 0, 2, 0]
 ];
-*/
 
 /* for king
 var gameBoard = [
@@ -37,6 +35,7 @@ var gameBoard = [
 ];
 */
 
+/*
 var gameBoard = [
     [0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 1, 0, 1, 0, 1, 0],
@@ -47,10 +46,53 @@ var gameBoard = [
     [0, 2, 0, 2, 0, 2, 0, 2],
     [2, 0, 2, 0, 2, 0, 2, 0]
 ];
+*/
 
 //printGameBoard();
 
-window.onload = createBoard;
+var websocket;
+
+window.onload = function() {
+    document.getElementById("board").addEventListener("click", eval);
+
+    websocket = new WebSocket("ws://localhost:8080/play");
+
+    websocket.onclose = function() {
+        document.getElementById("msgHeader").innerHTML = "Lost connection";
+    };
+
+    websocket.onmessage = function(msg) {
+        const move = JSON.parse(msg.data);
+        if (move.firstMessage) {
+            if (move.startOrder == 1) {
+                document.getElementById("msgHeader")
+                        .innerHTML = "You are going first";
+            } else {
+                document.getElementById("msgHeader")
+                        .innerHTML = "You are going second";
+            }
+        } else {
+            alert("stuff");
+        }
+    };
+
+    websocket.onerror = function(err) {
+        document.getElementById("msgHeader").innerHTML = "Lost connection";
+    };
+
+    websocket.onopen = function(err) {
+        alert("websocket open");
+    };
+};
+
+function makeMove() {
+    alert("moving...");
+}
+
+function quitGame() {
+    alert("quiting");
+}
+
 function createBoard() {
     var board = document.getElementById("board");
     board.addEventListener("click", eval);
