@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Board</title>
         <link rel="stylesheet" type="text/css" href="/web/board/board.css">
-        <script type="text/javascript" src="/web/board/board.js"></script>
+        <script type="module" src="/web/board/main.js"></script>
     </head>
     <body>
         <div class="grid-container">
@@ -12,7 +12,8 @@
                 <h1 id="msgHeader">Waiting for other player...</h1>
             </div>
             <div class="middle" style="background-color:#505050">
-                <table id="board">
+                <table id="board"></table>
+                <!-- <table id="board">
                     <tr>
                         <td></td>
                         <td><span class="checkerPiece" style="background-color:lightgreen; border=2px solid lightgreen;"></span></td>
@@ -93,7 +94,7 @@
                         <td><span class="checkerPiece" style="background-color:lightskyblue; border=2px solid lightskyblue;"></span></td>
                         <td></td>
                     </tr>
-                </table>
+                </table> -->
             </div>
             <div class="right" style="background-color:#505050">
                 <div class="checkerPiece" style="background-color:lightgreen"></div>
