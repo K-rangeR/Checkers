@@ -1,4 +1,5 @@
 import { Board } from "./modules/board.js";
+import { GameEngine } from "./modules/engine.js";
 
 const KING = true;
 const NOT_KING = false;
@@ -6,6 +7,7 @@ const NOT_KING = false;
 let board;
 
 window.onload = () => {
+    /*
     board = new Board(8, 8, "lightskyblue", "lightskyblue",
                           document.getElementById("board"));
 
@@ -13,9 +15,14 @@ window.onload = () => {
             .addEventListener("click", boardPressHandler);
 
     board.create();
+
     board.addChecker({"row":0,"col":0}, "lightgreen", NOT_KING);
     board.addChecker({"row":0,"col":1}, "lightskyblue", KING);
     board.moveChecker({"row":0,"col":0}, {"row":2,"col":2});
+    */
+
+    let engine = new GameEngine(12);
+    engine.selectChecker(5, 2);
 };
 
 function boardPressHandler(event) {
