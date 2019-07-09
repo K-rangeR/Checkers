@@ -58,10 +58,46 @@ class GameEngine {
         return true;
     }
 
-    moveChecker(srcRow, srcCol, dstRow, dstCol) {
+    isJumpable(row, col) {
+        // upper left corner
+        if (row == this.selectedChecker.row-1
+                && col == this.selectedChecker.col-1) {
+            return true;
+        }
+
+        // upper right corner
+        if (row == this.selectedChecker.row-1
+                && col == this.selectedChecker.col+1) {
+            return true;
+        }
+
+        let checker = this.gameBoard[this.selectedChecker.row]
+                                    [this.selectedChecker.col];
+
+        // for king only, bottom left corner
+        if (checker == PLAYER_KING &&
+                (row == this.selectedChecker.row+1 &&
+                 col == this.selectedChecker.col-1)) {
+            return true;
+        }
+
+        // for king only, bottom right corner
+        if (checker == PLAYER_KING &&
+                (row == this.selectedChecker.row+1 &&
+                 col == this.selectedChecker.col+1)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    moveSelectedChecker(dstRow, dstCol) {
+        let srcRow = this.selectedChecker.row;
+        let srcCol = this.selectedChecker.col;
         let checker = this.gameBoard[srcRow][srcCol];
         this.gameBoard[srcRow][srcCol] = 0;
         this.gameBoard[dstRow][dstCol] = checker;
+        this.selectChecker(dstRow, dstCol);
     }
 
     upgradeToKing(row, col) {
@@ -107,6 +143,10 @@ class GameEngine {
         this.selectedChecker.col = -1;
     }
 
+    isCheckerToJumpSelected() {
+        return this.checkerToJump.row != -1;
+    }
+
     selectCheckerToJump(row, col) {
         this.checkerToJump.row = row;
         this.checkerToJump.col = col;
@@ -127,6 +167,11 @@ class GameEngine {
 
     gameWasLost() {
         return this.playerCheckers == 0;
+    }
+
+    isOpponentChecker(row, col) {
+        return this.gameBoard[row][col] ==  OPPONENT_KING
+                || this.gameBoard[row][col] == OPPONENT_CHECKER;
     }
 
     isSquareOccupied(row, col) {

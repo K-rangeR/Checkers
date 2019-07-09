@@ -19,6 +19,21 @@ class Board {
                 col.style.textAlign = "center";
             }
         }
+        this._addCheckers();
+    }
+
+    _addCheckers() {
+        for (let i = 0; i < this.width; i++) {
+            if (i % 2 == 0) {
+                this.addChecker({"row":1,"col":i}, this.opponentCheckerColor, false);
+                this.addChecker({"row":5,"col":i}, this.playerCheckerColor, false);
+                this.addChecker({"row":7,"col":i}, this.playerCheckerColor, false);
+            } else {
+                this.addChecker({"row":0,"col":i}, this.opponentCheckerColor, false);
+                this.addChecker({"row":2,"col":i}, this.opponentCheckerColor, false);
+                this.addChecker({"row":6,"col":i}, this.playerCheckerColor, false);
+            }
+        }
     }
 
     moveChecker(src, dst) {
@@ -61,6 +76,14 @@ class Board {
         let king = this._getCheckerElement(cell.row, cell.col);
         checker.style.backgroundColor = color;
         checker.style.border = "2px solid black";
+    }
+
+    getPlayerCheckerColor() {
+        return this.playerCheckerColor;
+    }
+
+    getOpponentCheckerColor() {
+        return this.opponentCheckerColor;
     }
 
     _getCheckerElement(row, col) {
