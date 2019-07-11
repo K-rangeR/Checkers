@@ -13,7 +13,7 @@ class GameEngine {
             [1, 0, 1, 0, 1, 0, 1, 0],
             [0, 1, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0],
             [2, 0, 2, 0, 2, 0, 2, 0],
             [0, 2, 0, 2, 0, 2, 0, 2],
             [2, 0, 2, 0, 2, 0, 2, 0]
@@ -44,18 +44,22 @@ class GameEngine {
         return normal || king;
     }
 
-    isValidJump(destRow, destCol) {
-        // 5 things can happen
-        //      - Up Left
-        //      - Up Right
-        //      - Down Left  (king)
-        //      - Down Right (king)
-        //      - Invalid jump
-        if (this.selectedChecker.row != this.checkerToJump.row-1
-                && this.selectedChecker.col != this.checkerToJump.col-1) {
-            return false;
+    isValidJump(dstRow, dstCol) {
+        let srcRow = this.selectedChecker.row;
+        let srcCol = this.selectedChecker.col;
+
+        // upward right jump
+        if (dstRow == srcRow-2 && dstCol == srcCol+2) {
+            return true;
         }
-        return true;
+        // upward left jump
+        if (dstRow == srcRow-2 && dstCol == srcCol-2) {
+            return true;
+        }
+
+        // TODO: handle king jump
+
+        return false;;
     }
 
     isJumpable(row, col) {
@@ -95,9 +99,13 @@ class GameEngine {
         let srcRow = this.selectedChecker.row;
         let srcCol = this.selectedChecker.col;
         let checker = this.gameBoard[srcRow][srcCol];
-        this.gameBoard[srcRow][srcCol] = 0;
+        this.removeCheckerFromBoard(srcRow, srcCol);
         this.gameBoard[dstRow][dstCol] = checker;
         this.selectChecker(dstRow, dstCol);
+    }
+
+    removeCheckerFromBoard(row, col) {
+        this.gameBoard[row][col] = 0;
     }
 
     upgradeToKing(row, col) {

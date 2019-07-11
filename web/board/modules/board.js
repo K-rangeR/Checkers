@@ -20,6 +20,7 @@ class Board {
             }
         }
         this._addCheckers();
+        this.addChecker({"row":4,"col":1}, this.opponentCheckerColor, false);
     }
 
     _addCheckers() {
@@ -37,6 +38,7 @@ class Board {
     }
 
     moveChecker(src, dst) {
+        console.log(src, dst);
         let checkerColor = this._getCheckerElement(src.row, src.col)
                                .style
                                .backgroundColor;

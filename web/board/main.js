@@ -59,7 +59,8 @@ function handleOpponentCheckerSelected(checker) {
 
     if (ge.isCheckerToJumpSelected()) {
         let oldJumpChecker = ge.getCheckerToJump();
-        board.changeNormalCheckerColor(oldJumpChecker, "lightgreen");
+        board.changeNormalCheckerColor(oldJumpChecker,
+                                       board.getOpponentCheckerColor());
     }
 
     ge.selectCheckerToJump(checker.row, checker.col);
@@ -98,20 +99,45 @@ function emptyCellSelected(cell) {
     handleJump(cell);
 }
 
-function handleMove(cell) {
-    if (!ge.isValidMove(cell.row, cell.col)
-            || ge.isSquareOccupied(cell.row, cell.col)) {
+function handleMove(dst) {
+    if (!ge.isValidMove(dst.row, dst.col)
+            || ge.isSquareOccupied(dst.row, dst.col)) {
         alert("That is not a valid move");
         return;
     }
 
     let src = ge.getSelectedChecker();
-    board.moveChecker(src, cell);
-    ge.moveSelectedChecker(cell.row, cell.col);
+    board.moveChecker(src, dst);
+    ge.moveSelectedChecker(dst.row, dst.col);
 }
 
 function handleJump(cell) {
-    console.log("jumping");
+    console.log("jumping", cell.row, cell.col);
+    if (!ge.isValidJump(cell.row, cell.col)) {
+        alert("Not a valid jump");
+        return;
+    }
+
+    let checker = ge.getSelectedChecker();
+    board.moveChecker(checker, cell);
+    ge.moveSelectedChecker(cell.row, cell.col);
+    board.changeNormalCheckerColor(cell, board.getPlayerCheckerColor());
+
+    let jumpedChecker = ge.getCheckerToJump();
+    board.removeChecker(jumpedChecker);
+    ge.removeCheckerFromBoard(jumpedChecker.row, jumpedChecker.col);
+    ge.unselectCheckerToJump();
+
+    updateOpponentCheckerCount(1);
+}
+
+function updateOpponentCheckerCount(reduction) {
+    ge.reduceOpponentCheckerCount(reduction);
+    let currentCount = document.getElementById("opponentCnt").innerHTML;
+    currentCount = currentCount.split(" ")[2];
+    currentCount -= 1;
+    currentCount = "Opponent = " + currentCount;
+    document.getElementById("opponentCnt").innerHTML = currentCount;
 }
 
 function getCellRowCol(cell) {
