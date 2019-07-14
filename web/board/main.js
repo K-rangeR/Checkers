@@ -44,7 +44,7 @@ function wsOnMessage(msg) {
         }
     } else {
         // TODO: update board
-        alert("Got a message from the other player!!!");
+        console.log(msg.data);
     }
 }
 
@@ -68,9 +68,7 @@ function wsSendMove(src, dst, jumpChecker, jumping, winner) {
         jump: jumpChecker,
     };
 
-    let moveMsg = JSON.stringify(move);
-    console.log(moveMsg);
-    //websocket.send(moveMsg);
+    websocket.send(JSON.stringify(move));
 }
 
 function boardPressHandler(event) {
@@ -199,7 +197,7 @@ function handleMove(dst) {
     }
 
     let src = ge.getSelectedChecker();
-    wsSendMove(src, dst, "", false, false);
+    wsSendMove(src, dst, {"row":0,"col":0}, false, false);
     board.moveChecker(src, dst);
     ge.moveSelectedChecker(dst.row, dst.col);
 }
