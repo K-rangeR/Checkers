@@ -8,6 +8,7 @@ const JUMP_CHECKER_COLOR = "red";
 
 let board;
 let ge;
+let websocket;
 
 window.onload = () => {
     board = new Board(8, 8, "lightskyblue", "lightgreen",
@@ -19,7 +20,33 @@ window.onload = () => {
     board.create();
 
     ge = new GameEngine(12);
+
+    websocket = new WebSocket("ws://localhost:8080/play");
+    websocket.onclose = wsOnClose;
+    websocket.onmessage = wsOnMessage;
+    websocket.onerror = wsOnError;
+    websocket.onopen = wsOnOpen;
 };
+
+function wsOnClose() {
+    console.log("on close");
+}
+
+function wsOnMessage(msg) {
+    console.log("Message received");
+}
+
+function wsOnError(err) {
+    console.log("There was an error:", err);
+}
+
+function wsOnOpen(err) {
+    console.log("WebSocket was opended");
+}
+
+function wsSendMove(move) {
+    console.log("Sending move");
+}
 
 function boardPressHandler(event) {
     let target = event.target;
