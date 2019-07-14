@@ -56,7 +56,7 @@ function wsOnOpen(err) {
     console.log("WebSocket was opended");
 }
 
-function wsSendMove(src, dst, jump, jumping, winner) {
+function wsSendMove(src, dst, jumpChecker, jumping, winner) {
     let move = {
         firstMessage: false,
         startOrder: 0,
@@ -65,7 +65,7 @@ function wsSendMove(src, dst, jump, jumping, winner) {
         jumping: jumping,
         src: src,
         dst: dst,
-        jump: jump,
+        jump: jumpChecker,
     };
 
     let moveMsg = JSON.stringify(move);
