@@ -29,23 +29,48 @@ window.onload = () => {
 };
 
 function wsOnClose() {
-    console.log("on close");
+    document.getElementById("msgHeader").innerHTML = "Lost connection";
 }
 
 function wsOnMessage(msg) {
-    console.log("Message received");
+    const move = JSON.parse(msg.data);
+    if (move.firstMessage) {
+        if (move.startOrder == 1) {
+            document.getElementById("msgHeader")
+                    .innerHTML = "You are going first";
+        } else {
+            document.getElementById("msgHeader")
+                    .innerHTML = "You are going second";
+        }
+    } else {
+        // TODO: update board
+        alert("Got a message from the other player!!!");
+    }
 }
 
 function wsOnError(err) {
-    console.log("There was an error:", err);
+    document.getElementById("msgHeader").innerHTML = "Lost connection";
 }
 
 function wsOnOpen(err) {
     console.log("WebSocket was opended");
 }
 
-function wsSendMove(move) {
-    console.log("Sending move");
+function wsSendMove(src, dst, jump, jumping, winner) {
+    let move = {
+        firstMessage: false,
+        startOrder: 0,
+        winner: winner,
+        quit: false,
+        jumping: jumping,
+        src: src,
+        dst: dst,
+        jump: jump,
+    };
+
+    let moveMsg = JSON.stringify(move);
+    console.log(moveMsg);
+    //websocket.send(moveMsg);
 }
 
 function boardPressHandler(event) {
@@ -174,6 +199,7 @@ function handleMove(dst) {
     }
 
     let src = ge.getSelectedChecker();
+    wsSendMove(src, dst, "", false, false);
     board.moveChecker(src, dst);
     ge.moveSelectedChecker(dst.row, dst.col);
 }
