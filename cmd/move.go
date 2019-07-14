@@ -19,11 +19,17 @@ type message struct {
 	// Quit is true if a player quits
 	Quit bool `json:"quit"`
 
-	// Cells is an array of game board cells
-	// that the player is moving a checker through.
-	// The first cell is the source cell and the
-	// last cell is the destination cell.
-	Cells []boardCell `json:"cells"`
+	// Jumping is true if the Jump object is set
+	Jumping bool `json:"jumping"`
+
+	// Source is the source cell of the checker being moved
+	Source boardCell `json:"src"`
+
+	// Destination is the destination cell for the checker being moved
+	Destination boardCell `json:"dst"`
+
+	// Jump is the cell of the checker being jumped
+	Jump boardCell `json:"jump"`
 
 	// Message is for testing ONLY, remove later
 	Message string `json:"message"`
