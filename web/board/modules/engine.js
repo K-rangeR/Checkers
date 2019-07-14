@@ -8,12 +8,22 @@ class GameEngine {
     constructor(checkers) {
         this.opponentCheckers = checkers;
         this.playerCheckers = checkers;
+        // this.gameBoard = [
+        //     [0, 1, 0, 1, 0, 1, 0, 1],
+        //     [1, 0, 1, 0, 1, 0, 1, 0],
+        //     [0, 1, 0, 1, 0, 1, 0, 1],
+        //     [0, 0, 0, 0, 0, 0, 0, 0],
+        //     [0, 1, 0, 0, 0, 0, 0, 0],
+        //     [2, 0, 2, 0, 2, 0, 2, 0],
+        //     [0, 2, 0, 2, 0, 2, 0, 2],
+        //     [2, 0, 2, 0, 2, 0, 2, 0]
+        // ];
         this.gameBoard = [
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
             [2, 0, 2, 0, 2, 0, 2, 0],
             [0, 2, 0, 2, 0, 2, 0, 2],
             [2, 0, 2, 0, 2, 0, 2, 0]
@@ -47,6 +57,7 @@ class GameEngine {
     isValidJump(dstRow, dstCol) {
         let srcRow = this.selectedChecker.row;
         let srcCol = this.selectedChecker.col;
+        let checker = this.gameBoard[srcRow][srcCol];
 
         // upward right jump
         if (dstRow == srcRow-2 && dstCol == srcCol+2) {
@@ -57,7 +68,19 @@ class GameEngine {
             return true;
         }
 
-        // TODO: handle king jump
+        // downward left jump
+        if (checker == PLAYER_KING &&
+                dstRow == srcRow+2 &&
+                dstCol == srcCol+2) {
+            return true;
+        }
+
+        // downward right jump
+        if (checker == PLAYER_KING &&
+                dstRow == srcRow+2 &&
+                dstCol == srcCol-2) {
+            return true;
+        }
 
         return false;;
     }
@@ -99,8 +122,12 @@ class GameEngine {
         let srcRow = this.selectedChecker.row;
         let srcCol = this.selectedChecker.col;
         let checker = this.gameBoard[srcRow][srcCol];
+
         this.removeCheckerFromBoard(srcRow, srcCol);
-        this.gameBoard[dstRow][dstCol] = checker;
+        if (dstRow == 0)
+            this.gameBoard[dstRow][dstCol] = PLAYER_KING;
+        else
+            this.gameBoard[dstRow][dstCol] = checker;
         this.selectChecker(dstRow, dstCol);
     }
 
@@ -175,6 +202,11 @@ class GameEngine {
 
     gameWasLost() {
         return this.playerCheckers == 0;
+    }
+
+    isKing(row, col) {
+        let checker = this.gameBoard[row][col];
+        return checker == PLAYER_KING || checker == OPPONENT_KING;
     }
 
     isOpponentChecker(row, col) {

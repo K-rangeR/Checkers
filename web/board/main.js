@@ -59,29 +59,68 @@ function handleOpponentCheckerSelected(checker) {
 
     if (ge.isCheckerToJumpSelected()) {
         let oldJumpChecker = ge.getCheckerToJump();
-        board.changeNormalCheckerColor(oldJumpChecker,
-                                       board.getOpponentCheckerColor());
+        if (ge.isKing(oldJumpChecker.row, oldJumpChecker.col)) {
+            board.changeKingCheckerColor(
+                oldJumpChecker,
+                board.getOpponentCheckerColor()
+            );
+        } else {
+            board.changeNormalCheckerColor(
+                oldJumpChecker,
+                board.getOpponentCheckerColor()
+            );
+        }
     }
 
     ge.selectCheckerToJump(checker.row, checker.col);
-    board.changeNormalCheckerColor(checker, JUMP_CHECKER_COLOR);
+    if (ge.isKing(checker.row, checker.col)) {
+        board.changeKingCheckerColor(checker, JUMP_CHECKER_COLOR);
+    } else {
+        board.changeNormalCheckerColor(checker, JUMP_CHECKER_COLOR);
+    }
 }
 
 function handlePlayerCheckerSelected(checker) {
     if (ge.isCheckerSelected()) {
         let oldChecker = ge.getSelectedChecker();
-        board.changeNormalCheckerColor(oldChecker,
-                                       board.getPlayerCheckerColor());
+        if (ge.isKing(oldChecker.row, oldChecker.col)) {
+            board.changeKingCheckerColor(
+                oldChecker,
+                board.getPlayerCheckerColor()
+            );
+        } else {
+            board.changeNormalCheckerColor(
+                oldChecker,
+                board.getPlayerCheckerColor()
+            );
+        }
     }
 
     if (ge.isCheckerToJumpSelected()) {
+        console.log("RESETTING JUMP CHECKER COLOR");
         let checkerToJump = ge.getCheckerToJump();
-        board.changeNormalCheckerColor(checkerToJump,
-                                       board.getOpponentCheckerColor());
+        if (ge.isKing(checkerToJump.row, checkerToJump.col)) {
+            board.changeKingCheckerColor(
+                checkerToJump,
+                board.getOpponentCheckerColor()
+            );
+        } else {
+            board.changeNormalCheckerColor(
+                checkerToJump,
+                board.getOpponentCheckerColor()
+            );
+        }
+        ge.unselectCheckerToJump();
     }
 
     ge.selectChecker(checker.row, checker.col);
-    board.changeNormalCheckerColor(checker, SELECTED_CHECKER_COLOR);
+    if (ge.isKing(checker.row, checker.col)) {
+        console.log("king");
+        board.changeKingCheckerColor(checker, SELECTED_CHECKER_COLOR);
+    } else {
+        console.log("normal");
+        board.changeNormalCheckerColor(checker, SELECTED_CHECKER_COLOR);
+    }
 }
 
 function emptyCellSelected(cell) {
@@ -96,6 +135,7 @@ function emptyCellSelected(cell) {
         return;
     }
 
+    console.log("HANDLING JUMP");
     handleJump(cell);
 }
 

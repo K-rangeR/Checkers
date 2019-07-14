@@ -20,18 +20,21 @@ class Board {
             }
         }
         this._addCheckers();
-        this.addChecker({"row":4,"col":1}, this.opponentCheckerColor, false);
+        //this.addChecker({"row":4,"col":1}, this.opponentCheckerColor, false);
+        this.addChecker({"row":1,"col":4}, this.opponentCheckerColor, false);
+        this.addChecker({"row":3,"col":2}, this.opponentCheckerColor, false);
+        this.addChecker({"row":3,"col":6}, this.opponentCheckerColor, false);
     }
 
     _addCheckers() {
         for (let i = 0; i < this.width; i++) {
             if (i % 2 == 0) {
-                this.addChecker({"row":1,"col":i}, this.opponentCheckerColor, false);
+                //this.addChecker({"row":1,"col":i}, this.opponentCheckerColor, false);
                 this.addChecker({"row":5,"col":i}, this.playerCheckerColor, false);
                 this.addChecker({"row":7,"col":i}, this.playerCheckerColor, false);
             } else {
-                this.addChecker({"row":0,"col":i}, this.opponentCheckerColor, false);
-                this.addChecker({"row":2,"col":i}, this.opponentCheckerColor, false);
+                //this.addChecker({"row":0,"col":i}, this.opponentCheckerColor, false);
+                //this.addChecker({"row":2,"col":i}, this.opponentCheckerColor, false);
                 this.addChecker({"row":6,"col":i}, this.playerCheckerColor, false);
             }
         }
@@ -44,7 +47,8 @@ class Board {
                                .backgroundColor;
 
         this.removeChecker(src);
-        this.addChecker(dst, checkerColor, false);
+        let isKingNow = dst.row == 0;
+        this.addChecker(dst, checkerColor, isKingNow);
     }
 
     removeChecker(checker) {
@@ -54,6 +58,7 @@ class Board {
 
     addChecker(cell, color, kingFlag) {
         let checker = this.makeChecker(color);
+        console.log("King on board:", kingFlag);
         if (kingFlag) {
             checker.style.border = "2px solid black";
         }
@@ -76,8 +81,8 @@ class Board {
 
     changeKingCheckerColor(cell, color) {
         let king = this._getCheckerElement(cell.row, cell.col);
-        checker.style.backgroundColor = color;
-        checker.style.border = "2px solid black";
+        king.style.backgroundColor = color;
+        king.style.border = "2px solid black";
     }
 
     getPlayerCheckerColor() {
