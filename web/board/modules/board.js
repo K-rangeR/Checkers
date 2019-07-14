@@ -20,21 +20,17 @@ class Board {
             }
         }
         this._addCheckers();
-        //this.addChecker({"row":4,"col":1}, this.opponentCheckerColor, false);
-        this.addChecker({"row":1,"col":4}, this.opponentCheckerColor, false);
-        this.addChecker({"row":3,"col":2}, this.opponentCheckerColor, false);
-        this.addChecker({"row":3,"col":6}, this.opponentCheckerColor, false);
     }
 
     _addCheckers() {
         for (let i = 0; i < this.width; i++) {
             if (i % 2 == 0) {
-                //this.addChecker({"row":1,"col":i}, this.opponentCheckerColor, false);
+                this.addChecker({"row":1,"col":i}, this.opponentCheckerColor, false);
                 this.addChecker({"row":5,"col":i}, this.playerCheckerColor, false);
                 this.addChecker({"row":7,"col":i}, this.playerCheckerColor, false);
             } else {
-                //this.addChecker({"row":0,"col":i}, this.opponentCheckerColor, false);
-                //this.addChecker({"row":2,"col":i}, this.opponentCheckerColor, false);
+                this.addChecker({"row":0,"col":i}, this.opponentCheckerColor, false);
+                this.addChecker({"row":2,"col":i}, this.opponentCheckerColor, false);
                 this.addChecker({"row":6,"col":i}, this.playerCheckerColor, false);
             }
         }
