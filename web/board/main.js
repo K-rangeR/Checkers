@@ -5,10 +5,13 @@ const KING = true;
 const NOT_KING = false;
 const SELECTED_CHECKER_COLOR = "orange";
 const JUMP_CHECKER_COLOR = "red";
+const NOT_MY_TURN = false;
+const MY_TURN = true;
 
 let board;
 let ge;
 let websocket;
+let turn;
 
 window.onload = () => {
     board = new Board(8, 8, "lightskyblue", "lightgreen",
@@ -38,14 +41,56 @@ function wsOnMessage(msg) {
         if (move.startOrder == 1) {
             document.getElementById("msgHeader")
                     .innerHTML = "You are going first";
+                    turn = MY_TURN;
         } else {
             document.getElementById("msgHeader")
                     .innerHTML = "You are going second";
+                    turn = NOT_MY_TURN;
         }
     } else {
-        // TODO: update board
-        console.log(msg.data);
+        updateBoard(move);
     }
+}
+
+function updateBoard(move) {
+    let src = translateMove(move.src);
+    let dst = translateMove(move.dst);
+    let jump = translateMove(move.jump);
+
+    if (ge.isKing(src.row, src.col)) {
+        board.changeKingCheckerColor(src, SELECTED_CHECKER_COLOR);
+    } else {
+        board.changeNormalCheckerColor(src, SELECTED_CHECKER_COLOR);
+    }
+
+    if (move.jumping) {
+        console.log("Jumping");
+        board.changeNormalCheckerColor(jump, JUMP_CHECKER_COLOR);
+        board.removeChecker(jump);
+        updatePlayerCheckerCount(1);
+        ge.removeCheckerFromBoard(jump.row, jump.col);
+    }
+
+    ge.moveOpponentChecker(src.row, src.col, dst.row, dst.col);
+    board.moveChecker(src, dst);
+    board.changeNormalCheckerColor(dst, board.getOpponentCheckerColor());
+
+    if (move.winner) {
+        alert("You lost this game, thanks for playing");
+        // TODO: redirect client to home page
+    }
+
+    ge.printGameBoard();
+    ge.unselectChecker();
+    turn = MY_TURN;
+}
+
+function translateMove(move) {
+    let cell = {
+         "row": (7 - move.row),
+         "col": (7 - move.col)
+    };
+    return cell;
 }
 
 function wsOnError(err) {
@@ -72,6 +117,10 @@ function wsSendMove(src, dst, jumpChecker, jumping, winner) {
 }
 
 function boardPressHandler(event) {
+    if (!turn) {
+        alert("It is not your turn, please wait");
+        return;
+    }
     let target = event.target;
     if (target.tagName == "SPAN") {
         checkerSelected(target);
@@ -199,7 +248,9 @@ function handleMove(dst) {
     let src = ge.getSelectedChecker();
     wsSendMove(src, dst, {"row":0,"col":0}, false, false);
     board.moveChecker(src, dst);
+    board.changeNormalCheckerColor(dst, board.getPlayerCheckerColor());
     ge.moveSelectedChecker(dst.row, dst.col);
+    turn = NOT_MY_TURN;
 }
 
 function handleJump(cell) {
@@ -210,25 +261,38 @@ function handleJump(cell) {
     }
 
     let checker = ge.getSelectedChecker();
+    let jumpedChecker = ge.getCheckerToJump();
+
+    wsSendMove(checker, cell, jumpedChecker, true, false);
+
     board.moveChecker(checker, cell);
     ge.moveSelectedChecker(cell.row, cell.col);
     board.changeNormalCheckerColor(cell, board.getPlayerCheckerColor());
 
-    let jumpedChecker = ge.getCheckerToJump();
     board.removeChecker(jumpedChecker);
     ge.removeCheckerFromBoard(jumpedChecker.row, jumpedChecker.col);
     ge.unselectCheckerToJump();
 
     updateOpponentCheckerCount(1);
+    turn = NOT_MY_TURN;
 }
 
 function updateOpponentCheckerCount(reduction) {
     ge.reduceOpponentCheckerCount(reduction);
     let currentCount = document.getElementById("opponentCnt").innerHTML;
     currentCount = currentCount.split(" ")[2];
-    currentCount -= 1;
+    currentCount -= reduction;
     currentCount = "Opponent = " + currentCount;
     document.getElementById("opponentCnt").innerHTML = currentCount;
+}
+
+function updatePlayerCheckerCount(reduction) {
+    ge.reducePlayerCheckerCount(reduction);
+    let currentCount = document.getElementById("playerCnt").innerHTML;
+    currentCount = currentCount.split(" ")[2];
+    currentCount -= reduction;
+    currentCount = "You = " + currentCount;
+    document.getElementById("playerCnt").innerHTML = currentCount;
 }
 
 function getCellRowCol(cell) {

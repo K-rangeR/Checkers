@@ -54,7 +54,6 @@ class Board {
 
     addChecker(cell, color, kingFlag) {
         let checker = this.makeChecker(color);
-        console.log("King on board:", kingFlag);
         if (kingFlag) {
             checker.style.border = "2px solid black";
         }
@@ -70,7 +69,9 @@ class Board {
     }
 
     changeNormalCheckerColor(cell, color) {
+        console.log(cell);
         let checker = this._getCheckerElement(cell.row, cell.col);
+        console.log(checker);
         checker.style.backgroundColor = color;
         checker.style.border = "2px solid " + color;
     }

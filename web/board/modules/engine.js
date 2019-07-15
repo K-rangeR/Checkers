@@ -108,6 +108,16 @@ class GameEngine {
         return false;
     }
 
+    moveOpponentChecker(srcRow, srcCol, dstRow, dstCol) {
+        let checker = this.gameBoard[srcRow][srcCol];
+        this.removeCheckerFromBoard(srcRow, srcCol);
+        if (dstRow == 0) {
+            this.gameBoard[dstRow][dstCol] = OPPONENT_KING;
+        } else {
+            this.gameBoard[dstRow][dstCol] = checker;
+        }
+    }
+
     moveSelectedChecker(dstRow, dstCol) {
         let srcRow = this.selectedChecker.row;
         let srcCol = this.selectedChecker.col;
