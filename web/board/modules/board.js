@@ -68,18 +68,18 @@ class Board {
         return checker;
     }
 
-    changeNormalCheckerColor(cell, color) {
-        console.log(cell);
+    changeColor(cell, color) {
+        console.log("changeColor:", cell);
         let checker = this._getCheckerElement(cell.row, cell.col);
-        console.log(checker);
+        console.log(checker.style.borderColor);
         checker.style.backgroundColor = color;
-        checker.style.border = "2px solid " + color;
-    }
-
-    changeKingCheckerColor(cell, color) {
-        let king = this._getCheckerElement(cell.row, cell.col);
-        king.style.backgroundColor = color;
-        king.style.border = "2px solid black";
+        if (checker.style.borderColor == "black") {
+            console.log("changeColor: king");
+            checker.style.border = "2px solid black";
+        } else {
+            console.log("changeColor: normal");
+            checker.style.border = "2px solid " + color;
+        }
     }
 
     getPlayerCheckerColor() {

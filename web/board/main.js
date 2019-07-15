@@ -57,15 +57,13 @@ function updateBoard(move) {
     let dst = translateMove(move.dst);
     let jump = translateMove(move.jump);
 
-    if (ge.isKing(src.row, src.col)) {
-        board.changeKingCheckerColor(src, SELECTED_CHECKER_COLOR);
-    } else {
-        board.changeNormalCheckerColor(src, SELECTED_CHECKER_COLOR);
-    }
+    board.changeColor(src, SELECTED_CHECKER_COLOR);
 
     if (move.jumping) {
         console.log("Jumping");
-        board.changeNormalCheckerColor(jump, JUMP_CHECKER_COLOR);
+
+        board.changeColor(jump, JUMP_CHECKER_COLOR);
+
         board.removeChecker(jump);
         updatePlayerCheckerCount(1);
         ge.removeCheckerFromBoard(jump.row, jump.col);
@@ -73,7 +71,7 @@ function updateBoard(move) {
 
     ge.moveOpponentChecker(src.row, src.col, dst.row, dst.col);
     board.moveChecker(src, dst);
-    board.changeNormalCheckerColor(dst, board.getOpponentCheckerColor());
+    board.changeColor(dst, board.getOpponentCheckerColor());
 
     if (move.winner) {
         alert("You lost this game, thanks for playing");
@@ -158,68 +156,28 @@ function handleOpponentCheckerSelected(checker) {
 
     if (ge.isCheckerToJumpSelected()) {
         let oldJumpChecker = ge.getCheckerToJump();
-        if (ge.isKing(oldJumpChecker.row, oldJumpChecker.col)) {
-            board.changeKingCheckerColor(
-                oldJumpChecker,
-                board.getOpponentCheckerColor()
-            );
-        } else {
-            board.changeNormalCheckerColor(
-                oldJumpChecker,
-                board.getOpponentCheckerColor()
-            );
-        }
+        board.changeColor(oldJumpChecker, board.getOpponentCheckerColor());
     }
 
     ge.selectCheckerToJump(checker.row, checker.col);
-    if (ge.isKing(checker.row, checker.col)) {
-        board.changeKingCheckerColor(checker, JUMP_CHECKER_COLOR);
-    } else {
-        board.changeNormalCheckerColor(checker, JUMP_CHECKER_COLOR);
-    }
+    board.changeColor(checker, JUMP_CHECKER_COLOR);
 }
 
 function handlePlayerCheckerSelected(checker) {
     if (ge.isCheckerSelected()) {
         let oldChecker = ge.getSelectedChecker();
-        if (ge.isKing(oldChecker.row, oldChecker.col)) {
-            board.changeKingCheckerColor(
-                oldChecker,
-                board.getPlayerCheckerColor()
-            );
-        } else {
-            board.changeNormalCheckerColor(
-                oldChecker,
-                board.getPlayerCheckerColor()
-            );
-        }
+        board.changeColor(oldChecker, board.getPlayerCheckerColor());
     }
 
     if (ge.isCheckerToJumpSelected()) {
         console.log("RESETTING JUMP CHECKER COLOR");
         let checkerToJump = ge.getCheckerToJump();
-        if (ge.isKing(checkerToJump.row, checkerToJump.col)) {
-            board.changeKingCheckerColor(
-                checkerToJump,
-                board.getOpponentCheckerColor()
-            );
-        } else {
-            board.changeNormalCheckerColor(
-                checkerToJump,
-                board.getOpponentCheckerColor()
-            );
-        }
+        board.changeColor(checkerToJump, board.getOpponentCheckerColor());
         ge.unselectCheckerToJump();
     }
 
     ge.selectChecker(checker.row, checker.col);
-    if (ge.isKing(checker.row, checker.col)) {
-        console.log("king");
-        board.changeKingCheckerColor(checker, SELECTED_CHECKER_COLOR);
-    } else {
-        console.log("normal");
-        board.changeNormalCheckerColor(checker, SELECTED_CHECKER_COLOR);
-    }
+    board.changeColor(checker, SELECTED_CHECKER_COLOR);
 }
 
 function emptyCellSelected(cell) {
@@ -248,7 +206,8 @@ function handleMove(dst) {
     let src = ge.getSelectedChecker();
     wsSendMove(src, dst, {"row":0,"col":0}, false, false);
     board.moveChecker(src, dst);
-    board.changeNormalCheckerColor(dst, board.getPlayerCheckerColor());
+    board.changeColor(dst, board.getPlayerCheckerColor());
+
     ge.moveSelectedChecker(dst.row, dst.col);
     turn = NOT_MY_TURN;
 }
@@ -267,7 +226,7 @@ function handleJump(cell) {
 
     board.moveChecker(checker, cell);
     ge.moveSelectedChecker(cell.row, cell.col);
-    board.changeNormalCheckerColor(cell, board.getPlayerCheckerColor());
+    board.changeColor(cell, board.getPlayerCheckerColor());
 
     board.removeChecker(jumpedChecker);
     ge.removeCheckerFromBoard(jumpedChecker.row, jumpedChecker.col);
