@@ -20,6 +20,9 @@ window.onload = () => {
     document.getElementById("board")
             .addEventListener("click", boardPressHandler);
 
+    document.getElementById("quitBtn")
+            .addEventListener("click", handleQuitGame);
+
     board.create();
 
     ge = new GameEngine(12);
@@ -30,6 +33,10 @@ window.onload = () => {
     websocket.onerror = wsOnError;
     websocket.onopen = wsOnOpen;
 };
+
+function handleQuitGame() {
+    console.log("quiting game");
+}
 
 function wsOnClose() {
     document.getElementById("msgHeader").innerHTML = "Lost connection";
@@ -76,7 +83,6 @@ function updateBoard(move) {
         window.location = "/web/index/index.html";
     }
 
-    ge.printGameBoard();
     ge.unselectChecker();
     turn = MY_TURN;
 }
@@ -168,7 +174,6 @@ function handlePlayerCheckerSelected(checker) {
     }
 
     if (ge.isCheckerToJumpSelected()) {
-        console.log("RESETTING JUMP CHECKER COLOR");
         let checkerToJump = ge.getCheckerToJump();
         board.changeColor(checkerToJump, board.getOpponentCheckerColor());
         ge.unselectCheckerToJump();
@@ -181,7 +186,6 @@ function handlePlayerCheckerSelected(checker) {
 function emptyCellSelected(cell) {
     cell = getCellRowCol(cell);
     if (!ge.isCheckerSelected() && !ge.isCheckerToJumpSelected()) {
-        console.log("No checker selected");
         return;
     }
 
@@ -190,7 +194,6 @@ function emptyCellSelected(cell) {
         return;
     }
 
-    console.log("HANDLING JUMP");
     handleJump(cell);
 }
 
@@ -211,7 +214,6 @@ function handleMove(dst) {
 }
 
 function handleJump(cell) {
-    console.log("jumping", cell.row, cell.col);
     if (!ge.isValidJump(cell.row, cell.col)) {
         alert("Not a valid jump");
         return;
@@ -233,7 +235,6 @@ function handleJump(cell) {
 
     if (ge.gameWasWon()) {
         alert("Good job you just won the game, thanks for playing");
-        // TODO: close websoket (if needed)
         window.location = "/web/index/index.html";
     }
     turn = NOT_MY_TURN;
