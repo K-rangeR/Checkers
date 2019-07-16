@@ -37,14 +37,12 @@ class Board {
     }
 
     moveChecker(src, dst) {
-        console.log(src, dst);
-        let checkerColor = this._getCheckerElement(src.row, src.col)
-                               .style
-                               .backgroundColor;
-
-        this.removeChecker(src);
-        let isKingNow = dst.row == 0;
-        this.addChecker(dst, checkerColor, isKingNow);
+        let checker = this._getCheckerElement(src.row, src.col);
+        let cell = this._getCellElement(dst.row, dst.col);
+        if (dst.row == 0 || dst.row == 7) {
+            checker.style.borderColor = "black";
+        }
+        cell.appendChild(checker);
     }
 
     removeChecker(checker) {
@@ -69,15 +67,11 @@ class Board {
     }
 
     changeColor(cell, color) {
-        console.log("changeColor:", cell);
         let checker = this._getCheckerElement(cell.row, cell.col);
-        console.log(checker.style.borderColor);
         checker.style.backgroundColor = color;
         if (checker.style.borderColor == "black") {
-            console.log("changeColor: king");
             checker.style.border = "2px solid black";
         } else {
-            console.log("changeColor: normal");
             checker.style.border = "2px solid " + color;
         }
     }
