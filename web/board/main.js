@@ -220,7 +220,8 @@ function handleJump(cell) {
     let checker = ge.getSelectedChecker();
     let jumpedChecker = ge.getCheckerToJump();
 
-    wsSendMove(checker, cell, jumpedChecker, true, false);
+    updateOpponentCheckerCount(1);
+    wsSendMove(checker, cell, jumpedChecker, true, ge.gameWasWon());
 
     board.moveChecker(checker, cell);
     ge.moveSelectedChecker(cell.row, cell.col);
@@ -230,7 +231,12 @@ function handleJump(cell) {
     ge.removeCheckerFromBoard(jumpedChecker.row, jumpedChecker.col);
     ge.unselectCheckerToJump();
 
-    updateOpponentCheckerCount(1);
+    if (ge.gameWasWon()) {
+        alert("Good job you just won the game, thanks for playing");
+        // TODO: close websoket (if needed)
+        // TODO: redirect player to home page
+        return;
+    }
     turn = NOT_MY_TURN;
 }
 
