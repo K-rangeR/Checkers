@@ -73,7 +73,7 @@ function updateBoard(move) {
 
     if (move.winner) {
         alert("You lost this game, thanks for playing");
-        // TODO: redirect client to home page
+        window.location = "/web/index/index.html";
     }
 
     ge.printGameBoard();
@@ -234,8 +234,7 @@ function handleJump(cell) {
     if (ge.gameWasWon()) {
         alert("Good job you just won the game, thanks for playing");
         // TODO: close websoket (if needed)
-        // TODO: redirect player to home page
-        return;
+        window.location = "/web/index/index.html";
     }
     turn = NOT_MY_TURN;
 }
