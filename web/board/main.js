@@ -35,7 +35,11 @@ window.onload = () => {
 };
 
 function handleQuitGame() {
-    console.log("quiting game");
+    let quit = window.confirm("Are you sure you want to quit?");
+    if (quit) {
+        websocket.close(1000);
+        window.location = "/web/index/index.html";
+    }
 }
 
 function wsOnClose() {
