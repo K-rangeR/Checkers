@@ -59,6 +59,10 @@ function wsOnMessage(msg) {
                     turn = NOT_MY_TURN;
         }
     } else {
+        if (move.quit) {
+            alert("The other player has quit the game");
+            window.location = "/web/index/index.html";
+        }
         updateBoard(move);
     }
 }
