@@ -78,7 +78,7 @@ func (p *player) readOpponentMove() {
 }
 
 func (p *player) socketCloseHandler(code int, text string) error {
-	fmt.Println("SOCKET WAS CLOSED", text, code)
+	fmt.Printf("%s, %s, %d\n", "SOCKET CLOSED", text, code)
 	return nil
 }
 

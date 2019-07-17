@@ -57,16 +57,9 @@ func matchUpPlayers(p1, p2 *player) {
 	p1.moveChan = moveChan
 	p2.moveChan = moveChan
 
-	// start == 0 player one goes first
-	// start == 1 player one goes second
-	start := rand.Intn(2)
-	if start == 0 {
-		p1.startChan <- true
-		p2.startChan <- false
-	} else {
-		p1.startChan <- false
-		p2.startChan <- true
-	}
+	p1.startChan <- true
+	p2.startChan <- false
+	
 	close(p1.startChan)
 	close(p2.startChan)
 }
