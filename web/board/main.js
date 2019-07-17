@@ -93,6 +93,7 @@ function updateBoard(move) {
 
     ge.unselectChecker();
     turn = MY_TURN;
+    document.getElementById("msgHeader").innerHTML = "It's your turn";
 }
 
 function translateMove(move) {
@@ -219,6 +220,7 @@ function handleMove(dst) {
 
     ge.moveSelectedChecker(dst.row, dst.col);
     turn = NOT_MY_TURN;
+    document.getElementById("msgHeader").innerHTML = "It's your opponents turn";
 }
 
 function handleJump(cell) {
@@ -245,7 +247,9 @@ function handleJump(cell) {
         alert("Good job you just won the game, thanks for playing");
         window.location = "/web/index/index.html";
     }
+    
     turn = NOT_MY_TURN;
+    document.getElementById("msgHeader").innerHTML = "It's your opponents turn";
 }
 
 function updateOpponentCheckerCount(reduction) {
