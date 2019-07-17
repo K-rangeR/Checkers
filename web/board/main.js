@@ -62,6 +62,7 @@ function wsOnMessage(msg) {
         if (move.quit) {
             alert("The other player has quit the game");
             window.location = "/web/index/index.html";
+            return;
         }
         updateBoard(move);
     }
@@ -247,7 +248,7 @@ function handleJump(cell) {
         alert("Good job you just won the game, thanks for playing");
         window.location = "/web/index/index.html";
     }
-    
+
     turn = NOT_MY_TURN;
     document.getElementById("msgHeader").innerHTML = "It's your opponents turn";
 }

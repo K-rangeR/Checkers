@@ -23,7 +23,7 @@ type matchMaker struct {
 func (m *matchMaker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	socket, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Fatal("ServeHTTP:", err)
+		log.Println("ServeHTTP: ", err)
 		return
 	}
 
