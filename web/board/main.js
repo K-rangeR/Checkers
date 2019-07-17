@@ -11,7 +11,7 @@ const MY_TURN = true;
 let board;
 let ge;
 let websocket;
-let turn;
+let turn = false;
 
 window.onload = () => {
     board = new Board(8, 8, "lightskyblue", "lightgreen",
@@ -58,6 +58,8 @@ function wsOnMessage(msg) {
                     .innerHTML = "You are going second";
                     turn = NOT_MY_TURN;
         }
+        let loader = document.querySelector(".lds-ellipsis");
+        loader.parentNode.removeChild(loader);
     } else {
         if (move.quit) {
             alert("The other player has quit the game");
