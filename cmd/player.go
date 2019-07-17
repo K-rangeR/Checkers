@@ -28,7 +28,6 @@ type player struct {
 // or second.
 func (p *player) play() {
 	p.socket.SetCloseHandler(p.socketCloseHandler)
-	fmt.Println("waiting for start: play()")
 	goFirst := <-p.startChan
 	if goFirst {
 		p.socket.WriteJSON(message{FirstMsg: true, StartOrder: 1})
@@ -49,12 +48,9 @@ func (p *player) readMyMove() {
 		return
 	}
 
-	fmt.Println("socket read: readMyMove()")
-
 	p.moveChan <- msg
 
 	if msg.Winner || msg.Quit {
-		fmt.Println("winner or quiter: readMyMove()")
 		p.socket.Close()
 		return
 	} else {
@@ -72,10 +68,7 @@ func (p *player) readOpponentMove() {
 		return
 	}
 
-	fmt.Println("channel read: readOpponentMove()")
-
 	if msg.Winner || msg.Quit {
-		fmt.Println("winner or quiter: readOpponentMove()")
 		p.socket.Close()
 		close(p.moveChan)
 		return
@@ -92,7 +85,6 @@ func (p *player) socketCloseHandler(code int, text string) error {
 // errorEndGame is used to signal to the other player that an
 // error has occured and the game must end
 func (p *player) errorEndGame() {
-	fmt.Println("errorEndGame()")
 	p.moveChan <- &message{Quit: true}
 	p.socket.Close()
 }
