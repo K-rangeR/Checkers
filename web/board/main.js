@@ -43,7 +43,7 @@ function handleQuitGame() {
 }
 
 function wsOnClose() {
-    document.getElementById("msgHeader").innerHTML = "Lost connection";
+    document.getElementById("msgHeader").innerHTML = "Game Over";
 }
 
 function wsOnMessage(msg) {

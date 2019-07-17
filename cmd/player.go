@@ -27,7 +27,7 @@ type player struct {
 // wait for a message that indicates if they are going first
 // or second.
 func (p *player) play() {
-	p.socket.SetCloseHandler(p.socketCloseHandler)
+	//p.socket.SetCloseHandler(p.socketCloseHandler)
 	goFirst := <-p.startChan
 	if goFirst {
 		p.socket.WriteJSON(message{FirstMsg: true, StartOrder: 1})

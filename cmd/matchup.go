@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/gorilla/websocket"
 	"log"
-	"math/rand"
 	"net/http"
 )
 
@@ -45,7 +44,7 @@ func (m *matchMaker) listenForPlayers() {
 			m.waitingPlayers = append(m.waitingPlayers, p)
 		} else {
 			p2 := m.waitingPlayers[0]
-			go matchUpPlayers(p, p2)
+			go matchUpPlayers(p2, p)
 			m.waitingPlayers = m.waitingPlayers[1:]
 		}
 	}
@@ -59,7 +58,7 @@ func matchUpPlayers(p1, p2 *player) {
 
 	p1.startChan <- true
 	p2.startChan <- false
-	
+
 	close(p1.startChan)
 	close(p2.startChan)
 }
