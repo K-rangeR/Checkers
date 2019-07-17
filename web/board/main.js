@@ -132,7 +132,6 @@ function wsSendMove(src, dst, jumpChecker, jumping, winner) {
 
 function boardPressHandler(event) {
     if (!turn) {
-        alert("It is not your turn, please wait");
         return;
     }
     let target = event.target;
