@@ -27,7 +27,10 @@ window.onload = () => {
 
     ge = new GameEngine(12);
 
-    websocket = new WebSocket("ws://localhost:8080/play");
+    let url = new URL("/play", window.location.href);
+    url.protocol = url.protocol.replace("http", "ws");
+    
+    websocket = new WebSocket(url);
     websocket.onclose = wsOnClose;
     websocket.onmessage = wsOnMessage;
     websocket.onerror = wsOnError;
