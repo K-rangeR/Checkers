@@ -24,14 +24,6 @@ func main() {
 
 	fs := http.FileServer(http.Dir(filepath.Join("..", "web")))
 	http.Handle("/web/", http.StripPrefix("/web/", fs))
-	http.HandleFunc("/proto_serve", func(w http.ResponseWriter, r *http.Request) {
-		t, err := template.ParseFiles("../proto/server_test.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-		t.Execute(w, nil)
-	})
-
 	http.Handle("/play", &mm)
 	go mm.listenForPlayers()
 
