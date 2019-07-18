@@ -78,7 +78,6 @@ function updateBoard(move) {
     board.changeColor(src, SELECTED_CHECKER_COLOR);
 
     if (move.jumping) {
-        console.log("Jumping");
         board.changeColor(jump, JUMP_CHECKER_COLOR);
         board.removeChecker(jump);
         updatePlayerCheckerCount(1);

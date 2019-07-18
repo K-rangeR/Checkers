@@ -49,6 +49,11 @@ class GameEngine {
         let srcCol = this.selectedChecker.col;
         let checker = this.gameBoard[srcRow][srcCol];
 
+		// is cell occupied
+		if (this.isSquareOccupied(dstRow, dstCol)) {
+			return false;
+		}
+
         // upward right jump
         if (dstRow == srcRow-2 && dstCol == srcCol+2) {
             return true;
@@ -72,7 +77,7 @@ class GameEngine {
             return true;
         }
 
-        return false;;
+        return false;
     }
 
     isJumpable(row, col) {
