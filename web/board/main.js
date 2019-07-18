@@ -7,6 +7,7 @@ const SELECTED_CHECKER_COLOR = "orange";
 const JUMP_CHECKER_COLOR = "red";
 const NOT_MY_TURN = false;
 const MY_TURN = true;
+const INDEX_URL = "/web/index/index.html";
 
 let board;
 let ge;
@@ -29,7 +30,7 @@ window.onload = () => {
 
     let url = new URL("/play", window.location.href);
     url.protocol = url.protocol.replace("http", "ws");
-    
+
     websocket = new WebSocket(url);
     websocket.onclose = wsOnClose;
     websocket.onmessage = wsOnMessage;
@@ -41,7 +42,7 @@ function handleQuitGame() {
     let quit = window.confirm("Are you sure you want to quit?");
     if (quit) {
         websocket.close(1000);
-        window.location = "/web/index/index.html";
+        window.location = INDEX_URL;
     }
 }
 
@@ -66,7 +67,7 @@ function wsOnMessage(msg) {
     } else {
         if (move.quit) {
             alert("The other player has quit the game");
-            window.location = "/web/index/index.html";
+            window.location = INDEX_URL;
             return;
         }
         updateBoard(move);
@@ -93,7 +94,7 @@ function updateBoard(move) {
 
     if (move.winner) {
         alert("You lost this game, thanks for playing");
-        window.location = "/web/index/index.html";
+        window.location = INDEX_URL;
     }
 
     ge.unselectChecker();
@@ -249,7 +250,7 @@ function handleJump(cell) {
 
     if (ge.gameWasWon()) {
         alert("Good job you just won the game, thanks for playing");
-        window.location = "/web/index/index.html";
+        window.location = INDEX_URL;
     }
 
     turn = NOT_MY_TURN;
