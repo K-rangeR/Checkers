@@ -1,3 +1,7 @@
+/*
+ * Represents the game board, and handles updating the board
+ * when players move checkers around.
+ */
 class Board {
     constructor(width,
                 height,
@@ -84,10 +88,16 @@ class Board {
         return this.opponentCheckerColor;
     }
 
+	/*
+	 * Returns the DOM checker element from the game board table at row col
+	 */
     _getCheckerElement(row, col) {
         return this.board.rows[row].cells[col].childNodes[0];
     }
 
+	/*
+	 * Returns the DOM cell element from the game board table at row col
+	 */
     _getCellElement(row, col) {
         return this.board.rows[row].cells[col];
     }
