@@ -4,6 +4,11 @@ const PLAYER_KING = 4;
 const OPPONENT_CHECKER = 1;
 const OPPONENT_KING = 3;
 
+/*
+ * Represents the game engine for checkers. It handles validating
+ * player moves, jumps, checker selections, and maintaining a logical
+ * view of the game board.
+ */
 class GameEngine {
     constructor(checkers) {
         this.opponentCheckers = checkers;
@@ -223,6 +228,7 @@ class GameEngine {
         return this.gameBoard[row][col] != 0;
     }
 
+	// For debugging
     printGameBoard() {
         let row = "";
         for (let i = 0; i < 8; i++) {
