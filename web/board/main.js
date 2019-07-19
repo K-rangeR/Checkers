@@ -79,8 +79,6 @@ function updateBoard(move) {
     let dst = translateMove(move.dst);
     let jump = translateMove(move.jump);
 
-    board.changeColor(src, SELECTED_CHECKER_COLOR);
-
     if (move.jumping) {
         board.removeChecker(jump);
         updatePlayerCheckerCount(1);
@@ -89,7 +87,6 @@ function updateBoard(move) {
 
     ge.moveOpponentChecker(src.row, src.col, dst.row, dst.col);
     board.moveChecker(src, dst);
-    board.changeColor(dst, board.getOpponentCheckerColor());
 
     if (move.winner) {
         alert("You lost this game, thanks for playing");
