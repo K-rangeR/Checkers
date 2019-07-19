@@ -5,11 +5,29 @@
         <title>Chex</title>
         <link rel="stylesheet" href="/web/index/index.css">
     <body>
-        <h1>Chekers</h1>
-        <p>
+        <h1>Checkers</h1>
+        <p id="welcome">
             Welcome! This is a multiplayer checkers game that runs right here
-            in your browser window. Just press play to start. You will then be
-            matched up with another player. Good luck!
+            in your browser window. Press play to start once you are ready.
+            You will then be matched up with another player. Good luck!
+        </p>
+        <h2>How to play</h2>
+        <p id="howToPlay">
+            When playing, select one of your checkers
+            by clicking on it with your mouse. The selected checker will turn
+            orange. Next you can press the square you want to move that checker
+            to. If the move was valid your turn is over and it is your opponents
+            turn. If the move was not valid the game will let you know and you will
+            be asked to try again. To jump over and eliminate the other players checker
+            start by selecting one of your checkers that you want to move, then select
+            one of the opponents checkers you want to jump, their checker will
+            turn red indicating that its jumpable. Finally press the destination
+            square that you want to jump to. If you want to select a different checker
+            simply press the new checker you want to move, its color will change
+            to orange and the old checker will go back to the normal color. Once a
+            checker makes it to the other side of the board it becomes a king, every
+            king checker will have a black ring around it. King checkers can move
+            forward and backward on the board.
         </p>
          <div style="text-align: center;">
              <form action="/web/board/board.html" method="get">

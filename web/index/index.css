@@ -3,9 +3,15 @@ h1 {
 	font-size: 40px;
 }
 
-p {
+#welcome {
 	text-align: center;
 	font-size: 30px;
+}
+
+#howToPlay {
+	font-size: 30px;
+	border-style: solid;
+	border-width: 1px;
 }
 
 input[type=submit] {
