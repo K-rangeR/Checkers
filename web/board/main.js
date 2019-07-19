@@ -1,3 +1,7 @@
+/*
+ * Game driver that handles UI events and normal game flow.
+ */
+
 import { Board } from "./modules/board.js";
 import { GameEngine } from "./modules/engine.js";
 
