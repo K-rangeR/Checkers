@@ -30,3 +30,6 @@ will be sent to the server and then to the other browser window. Have fun!
 
 ## Dependencies
 * [Gorilla websocket](https://github.com/gorilla/websocket)
+
+## Screen Shot
+![Screen Shot 2019-07-19 at 4 44 29 PM](https://user-images.githubusercontent.com/43307752/61567308-b6a0cb80-aa44-11e9-830f-b02e941b634f.gif)
