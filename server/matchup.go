@@ -18,7 +18,7 @@ type matchMaker struct {
 }
 
 // ServeHTTP is the http handler that runs when a player wants
-// to play against another player
+// to play against another player. Handles /play requests.
 func (m *matchMaker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	socket, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -37,6 +37,7 @@ func (m *matchMaker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // listenForPlayers listens on playerChan for players requesting to play
+// against eachother
 func (m *matchMaker) listenForPlayers() {
 	for {
 		p := <-m.playerChan
@@ -56,6 +57,7 @@ func matchUpPlayers(p1, p2 *player) {
 	p1.moveChan = moveChan
 	p2.moveChan = moveChan
 
+	// p1 will make a move first
 	p1.startChan <- true
 	p2.startChan <- false
 

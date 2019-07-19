@@ -30,9 +30,6 @@ type message struct {
 
 	// Jump is the cell of the checker being jumped
 	Jump boardCell `json:"jump"`
-
-	// Message is for testing ONLY, remove later
-	Message string `json:"message"`
 }
 
 // boardCell represents a cell on the game board

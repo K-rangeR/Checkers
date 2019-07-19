@@ -16,6 +16,7 @@ type rootHandler struct {
 	indexPath string
 }
 
+// ServeHTTP is the http handler for requests targeting the site root
 func (t *rootHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
 		t.indexPath = filepath.Join("..", "web", "index", "index.html")

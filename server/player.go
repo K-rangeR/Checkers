@@ -9,7 +9,7 @@ import (
 // player represents a checker player
 type player struct {
 	// socket is used to send player and opponent
-	// moves to the server and browser
+	// moves between the server and browser
 	socket *websocket.Conn
 
 	// moveChan is used to link up the two players,
@@ -27,7 +27,6 @@ type player struct {
 // wait for a message that indicates if they are going first
 // or second.
 func (p *player) play() {
-	//p.socket.SetCloseHandler(p.socketCloseHandler)
 	goFirst := <-p.startChan
 	if goFirst {
 		p.socket.WriteJSON(message{FirstMsg: true, StartOrder: 1})
@@ -75,11 +74,6 @@ func (p *player) readOpponentMove() {
 	} else {
 		p.readMyMove()
 	}
-}
-
-func (p *player) socketCloseHandler(code int, text string) error {
-	fmt.Printf("%s, %s, %d\n", "SOCKET CLOSED", text, code)
-	return nil
 }
 
 // errorEndGame is used to signal to the other player that an
